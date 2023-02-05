@@ -17,15 +17,6 @@ int main(){
 ifstream file("/Users/lautlos/work/Doktordatei/db.txt");
 
 
-
-
-    // Überprüfen, ob die Datei erfolgreich geöffnet wurde
-    if (!file.is_open()) {
-        cout << "Datei konnte nicht geöffnet werden." << endl;
-        
-        return 1;
-    }
-    
     // Speicherung der Daten in einer Zeichenfolge
     string data; 
   
