@@ -7,6 +7,7 @@ using namespace std;
 #include "Doktorand.hpp"
 #include <ctype.h>
 #include <stdio.h>
+#include <typeinfo>
 
 int main(){
 
@@ -15,8 +16,6 @@ int main(){
 
 // Speichertort der zu öffnenden Datei
 ifstream file("/Users/lautlos/work/Doktordatei/db.txt");
-
-
 
 
     // Überprüfen, ob die Datei erfolgreich geöffnet wurde
@@ -33,6 +32,7 @@ ifstream file("/Users/lautlos/work/Doktordatei/db.txt");
     string curr = "";
     string outPrev = "";
     string outCurr = "";
+
     // Schleife, zur Auslesung der ganzen Datei
     while (getline(file, data)){
         
@@ -44,9 +44,24 @@ ifstream file("/Users/lautlos/work/Doktordatei/db.txt");
         } catch ( ... ) {
             outCurr = "string " + curr ;
         }
-        cout << "prev: " << outPrev << " curr: " << outCurr << "\n ";
+        /*cout << "prev: " << outPrev << " curr: " << outCurr << "\n ";*/
         outPrev = outCurr;
-    }
+
+        if(outCurr == "int" + curr) {
+
+            int num = stoi(curr);
+        }
+    
+
+        if (typeid(outCurr).name() == typeid(int).name() && typeid(outPrev).name() == typeid(string).name())
+        {
+
+            cout << "ein block :" << outCurr;
+        }
+
+
+        }
+    
 
     return 0;
 
