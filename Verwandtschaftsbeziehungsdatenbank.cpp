@@ -7,9 +7,9 @@ using namespace std;
 #include "Doktorand.hpp"
 #include <ctype.h>
 #include <stdio.h>
-#include <typeinfo>
 
 int main(){
+
 
 
 
@@ -17,6 +17,8 @@ int main(){
 // Speichertort der zu öffnenden Datei
 ifstream file("/Users/lautlos/work/Doktordatei/db.txt");
 
+    
+    vector<Person2> persons;
 
     // Überprüfen, ob die Datei erfolgreich geöffnet wurde
     if (!file.is_open()) {
@@ -25,54 +27,75 @@ ifstream file("/Users/lautlos/work/Doktordatei/db.txt");
         return 1;
     }
     
-    // Speicherung der Daten in einer Zeichenfolge
-    string data; 
-  
-    string first_line;
-    string curr = "";
-    string outPrev = "";
-    string outCurr = "";
+    string line;
+    string data = "";
+    string sep = "";
+    int i = 0;
+    int t;
 
     // Schleife, zur Auslesung der ganzen Datei
-    while (getline(file, data)){
+    ifstream f("/Users/lautlos/work/Doktordatei/db.txt");
+    if (f.is_open()) {
         
-        curr = data[0];
+        while (getline(f, line)) {
+          // cout << "test";
 
-        try {
-            std::stoi(curr);
-            outCurr = "int " + curr ;
-        } catch ( ... ) {
-            outCurr = "string " + curr ;
+            if (i > 0) {
+                sep = ",";
+            }
+            if (i % 6 == 0) {
+                sep = "\n";
+            }
+
+            //cout << "test2";
+            data = sep + line;
+            i++;
         }
-        /*cout << "prev: " << outPrev << " curr: " << outCurr << "\n ";*/
-        outPrev = outCurr;
+            
+      
+        if(t > 0) {
+               // cout << "test3";
+                std::vector<std::string> elements;
+                std::stringstream lineStream(data);
+                std::string element;
+                while(getline(lineStream, element, ',')) {
+                    elements.push_back(element);
+                }
+       // cout << "test4";
 
-        if(outCurr == "int" + curr) {
+         // Konvertiere die Teilstrings zu den richtigen Datentypen
+                //int id = stoi(elements[0]);
+                std::string id = elements[0];
+                std::string name = elements[1];
+                std::string uni = elements[2];
+                //int jahr = stoi(elements[3]);
+                //int doktorand_id = stoi(elements[4]);
+                //int betreuer_id = stoi(elements[5]);
+                std::string jahr= elements[3];
+                //std::string doktorand_id = elements[4];
+                //std::string betreuer_id = elements[5];
 
-            int num = stoi(curr);
+
+
+
+            // Füge die Person zum Vector hinzu
+                Person2 person(id, name, uni, jahr /*doktorand_id, betreuer_id*/);
+                persons.push_back(person);
+
+
+            
         }
+        t++;
+    }
+     
+     //Gebe den Vector mit Personen aus
+        for (Person2 person:persons) {
+           //cout << "bla";
+            cout << person.id << ", " << person.name << ", " << person.uni << ", " << person.jahr << ", " /*<< person.doktorand_id << ", " << person.betreuer_id */<< endl;
+                
     
 
-        if (typeid(outCurr).name() == typeid(int).name() && typeid(outPrev).name() == typeid(string).name())
-        {
-
-            cout << "ein block :" << outCurr;
         }
-
-
-        }
-    
-
-    return 0;
+return 0;
 
 }
-
-
-
-
-
-
-
-
-
-
