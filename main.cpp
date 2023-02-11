@@ -7,12 +7,8 @@ using namespace std;
 #include <string>
 #include <sstream>
 #include "Doktorand.hpp"
-#include <ctype.h>
-#include <stdio.h>
+#include "data.hpp"
 
-
-#include <iostream>
-#include <string>
 #include <algorithm>
 
 const std::string WHITESPACE = " \n\r\t\f\v";
@@ -25,27 +21,16 @@ std::string rtrim(const std::string &s) {
 int main() {
 
 // Speichertort der zu öffnenden Datei
-    ifstream file("db.txt");
-
+    std::stringstream dbStream(db);
     PersonList personList = PersonList();
 
-    // Überprüfen, ob die Datei erfolgreich geöffnet wurde
-    if (!file.is_open()) {
-        cout << "Datei konnte nicht geöffnet werden." << endl;
-        return 1;
-    }
-
     string line;
-    string data = "";
-    string sep = "";
+    string data;
+    string sep;
     int i = 0;
-    int t;
 
     // Schleife, zur Auslesung der ganzen Datei
-    ifstream f("db.txt");
-    if (f.is_open()) {
-
-        while (getline(f, line)) {
+        while (getline(dbStream, line)) {
             if (i > 0) {
                 sep = ",";
                 if (i % 6 == 0) {
@@ -55,7 +40,7 @@ int main() {
             data += sep + rtrim(line);
             i++;
         }
-    }
+
     //cout << data;
     std::stringstream lineStream(data);
     std::string element;
@@ -73,26 +58,42 @@ int main() {
         std::string jahr = elements[3];
 
         // doktorand vector Erstellung
-        std::vector<std::string> doktorandVec;
-        std::stringstream doktorandStream(elements[4]);
-        while (getline(doktorandStream, item, ' ')) {
-            doktorandVec.push_back(item);
-        }
-        // doktorand vector Erstellung
         std::vector<std::string> betreuerVec;
-        std::stringstream betreuerVec(elements[5]);
+        std::stringstream betreuerStream(elements[4]);
+        while (getline(betreuerStream, item, ' ')) {
+            betreuerVec.push_back(item);
+        }
+
+        // doktorand vector Erstellung
+        std::vector<std::string> doktorandVec;
+        std::stringstream doktorandStream(elements[5]);
         while (getline(doktorandStream, item, ' ')) {
             doktorandVec.push_back(item);
         }
-        std::string betreuer_id = elements[5];
 
-        Person person(id, name, uni, jahr, doktorandVec, betreuer_id);
+        Person person(id, name, uni, jahr, betreuerVec, doktorandVec);
         personList.add(person);
     }
 
-    cout << personList.size() << endl;
-    //personList.print();
-    personList.searchName("Mario  Hlawitschka").print();
+    cout << "Person count: " << personList.size() << endl;
+
+    cout << "All persons: " << endl;
+    personList.print("\t");
+
+    cout << endl << "Search By Name: " << endl;
+    personList.searchByName("Mario  Hlawitschka").print("\t");
+
+    cout << endl << "Alle Einträge zu einem Doktoranten: ";
+    personList.personRel("124000");
+
+    cout << endl << "Schreiben Sie eine Funktion, die zu einer Person in der Datenbank alle Doktoranden sowie (rekursiv) deren Doktoranden etc. zurückliefert. " << endl;
+    Person pers = personList.searchById("226240");
+    cout << pers.name << endl;
+    personList.personRelRec("226240");
+
+    cout << endl << "Schreiben Sie eine Funktion, die zu einer Person in der Datenbank alle Doktoranden sowie (rekursiv) deren Doktoranden etc. zurückliefert. " << endl;
+    personList.personRelRec("125450");
+
     return 0;
 
 }
