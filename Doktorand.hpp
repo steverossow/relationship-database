@@ -9,8 +9,8 @@ public:
     std::string name;
     std::string uni;
     std::string jahr;
-    std::string doktorand_id;
-    std::string betreuer_id;
+    std::vector<std::string> doktorandVec;
+    std::vector<std::string> betreuerVec;
 
 
     Person(std::string id,

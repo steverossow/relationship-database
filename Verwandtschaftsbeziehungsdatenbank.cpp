@@ -73,15 +73,20 @@ int main() {
         std::string jahr = elements[3];
 
         // doktorand vector Erstellung
-        std::vector<std::string> elements;
+        std::vector<std::string> doktorandVec;
         std::stringstream doktorandStream(elements[4]);
         while (getline(doktorandStream, item, ' ')) {
-            elements.push_back(item);
+            doktorandVec.push_back(item);
         }
-        std::string doktorandVec = elements[4];
+        // doktorand vector Erstellung
+        std::vector<std::string> betreuerVec;
+        std::stringstream betreuerVec(elements[5]);
+        while (getline(doktorandStream, item, ' ')) {
+            doktorandVec.push_back(item);
+        }
         std::string betreuer_id = elements[5];
 
-        Person person(id, name, uni, jahr, doktorand_id, betreuer_id);
+        Person person(id, name, uni, jahr, doktorandVec, betreuer_id);
         personList.add(person);
     }
 
