@@ -20,7 +20,6 @@ std::string rtrim(const std::string &s) {
 
 int main() {
 
-// Speichertort der zu öffnenden Datei
     std::stringstream dbStream(db);
     PersonList personList = PersonList();
 
@@ -30,16 +29,16 @@ int main() {
     int i = 0;
 
     // Schleife, zur Auslesung der ganzen Datei
-        while (getline(dbStream, line)) {
-            if (i > 0) {
-                sep = ",";
-                if (i % 6 == 0) {
-                    sep = "\n";
-                }
+    while (getline(dbStream, line)) {
+        if (i > 0) {
+            sep = ",";
+            if (i % 6 == 0) {
+                sep = "\n";
             }
-            data += sep + rtrim(line);
-            i++;
         }
+        data += sep + rtrim(line);
+        i++;
+    }
 
     //cout << data;
     std::stringstream lineStream(data);
@@ -86,12 +85,16 @@ int main() {
     cout << endl << "Alle Einträge zu einem Doktoranten: ";
     personList.personRel("124000");
 
-    cout << endl << "Schreiben Sie eine Funktion, die zu einer Person in der Datenbank alle Doktoranden sowie (rekursiv) deren Doktoranden etc. zurückliefert. " << endl;
+    cout << endl
+         << "Schreiben Sie eine Funktion, die zu einer Person in der Datenbank alle Doktoranden sowie (rekursiv) deren Doktoranden etc. zurückliefert. "
+         << endl;
     Person pers = personList.searchById("226240");
     cout << pers.name << endl;
     personList.personRelRec("226240");
 
-    cout << endl << "Schreiben Sie eine Funktion, die zu einer Person in der Datenbank alle Doktoranden sowie (rekursiv) deren Doktoranden etc. zurückliefert. " << endl;
+    cout << endl
+         << "Schreiben Sie eine Funktion, die zu einer Person in der Datenbank alle Doktoranden sowie (rekursiv) deren Doktoranden etc. zurückliefert. "
+         << endl;
     personList.personRelRec("125450");
 
     return 0;
