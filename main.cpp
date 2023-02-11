@@ -20,7 +20,6 @@ std::string rtrim(const std::string &s) {
 
 int main() {
 
-// Speichertort der zu öffnenden Datei
     std::stringstream dbStream(db);
     PersonList personList = PersonList();
 
