@@ -107,17 +107,20 @@ public:
         return Person();
     }
 
-    void personRelRec(string id) {
+    void personRelRec(string id, bool rec=false) {
+        if (!rec){
+            cache.clear();
+        }
         for (string dok: searchById(id).doktorandVec) {
             Person pers = searchById(dok);
             if (std::count(cache.begin(), cache.end(), pers.id)) {
                 return;
             }
-            cache.push_back(dok);
             if (!pers.isEmpty()){
                 pers.print("\t");
             }
-            personRelRec(dok);
+            cache.push_back(dok);
+            personRelRec(dok, true);
         }
     }
 

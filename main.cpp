@@ -96,7 +96,5 @@ int main() {
          << "Schreiben Sie eine Funktion, die zu einer Person in der Datenbank alle Doktoranden sowie (rekursiv) deren Doktoranden etc. zurückliefert. "
          << endl;
     personList.personRelRec("125450");
-
     return 0;
-
 }
