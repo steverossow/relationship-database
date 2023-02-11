@@ -1,6 +1,4 @@
-//
-// Created by Mathias Weiß on 11.02.23.
-//
+
 static const char *db="226366\n"
                         "Mario  Hlawitschka\n"
                         "Universität Leipzig\n"
