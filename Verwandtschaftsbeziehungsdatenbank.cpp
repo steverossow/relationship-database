@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
+
 using namespace std;
+
 #include <vector>
 #include <string>
 #include <sstream>
@@ -8,25 +10,31 @@ using namespace std;
 #include <ctype.h>
 #include <stdio.h>
 
-int main(){
 
+#include <iostream>
+#include <string>
+#include <algorithm>
 
+const std::string WHITESPACE = " \n\r\t\f\v";
 
+std::string rtrim(const std::string &s) {
+    size_t end = s.find_last_not_of(WHITESPACE);
+    return (end == std::string::npos) ? "" : s.substr(0, end + 1);
+}
 
+int main() {
 
 // Speichertort der zu öffnenden Datei
-ifstream file("/Users/lautlos/work/Doktordatei/db.txt");
+    ifstream file("db.txt");
 
-    
-    vector<Person2> persons;
+    PersonList personList = PersonList();
 
     // Überprüfen, ob die Datei erfolgreich geöffnet wurde
     if (!file.is_open()) {
         cout << "Datei konnte nicht geöffnet werden." << endl;
-        
         return 1;
     }
-    
+
     string line;
     string data = "";
     string sep = "";
@@ -34,68 +42,52 @@ ifstream file("/Users/lautlos/work/Doktordatei/db.txt");
     int t;
 
     // Schleife, zur Auslesung der ganzen Datei
-    ifstream f("/Users/lautlos/work/Doktordatei/db.txt");
+    ifstream f("db.txt");
     if (f.is_open()) {
-        
-        while (getline(f, line)) {
-          // cout << "test";
 
+        while (getline(f, line)) {
             if (i > 0) {
                 sep = ",";
+                if (i % 6 == 0) {
+                    sep = "\n";
+                }
             }
-            if (i % 6 == 0) {
-                sep = "\n";
-            }
-
-            //cout << "test2";
-            data = sep + line;
+            data += sep + rtrim(line);
             i++;
         }
-            
-      
-        if(t > 0) {
-               // cout << "test3";
-                std::vector<std::string> elements;
-                std::stringstream lineStream(data);
-                std::string element;
-                while(getline(lineStream, element, ',')) {
-                    elements.push_back(element);
-                }
-       // cout << "test4";
-
-         // Konvertiere die Teilstrings zu den richtigen Datentypen
-                //int id = stoi(elements[0]);
-                std::string id = elements[0];
-                std::string name = elements[1];
-                std::string uni = elements[2];
-                //int jahr = stoi(elements[3]);
-                //int doktorand_id = stoi(elements[4]);
-                //int betreuer_id = stoi(elements[5]);
-                std::string jahr= elements[3];
-                //std::string doktorand_id = elements[4];
-                //std::string betreuer_id = elements[5];
-
-
-
-
-            // Füge die Person zum Vector hinzu
-                Person2 person(id, name, uni, jahr /*doktorand_id, betreuer_id*/);
-                persons.push_back(person);
-
-
-            
-        }
-        t++;
     }
-     
-     //Gebe den Vector mit Personen aus
-        for (Person2 person:persons) {
-           //cout << "bla";
-            cout << person.id << ", " << person.name << ", " << person.uni << ", " << person.jahr << ", " /*<< person.doktorand_id << ", " << person.betreuer_id */<< endl;
-                
-    
-
+    //cout << data;
+    std::stringstream lineStream(data);
+    std::string element;
+    while (getline(lineStream, element, '\n')) {
+        std::vector<std::string> elements;
+        std::stringstream elementStream(element);
+        std::string item;
+        while (getline(elementStream, item, ',')) {
+            elements.push_back(item);
         }
-return 0;
+        //cout << elements.size() << endl;
+        std::string id = elements[0];
+        std::string name = elements[1];
+        std::string uni = elements[2];;
+        std::string jahr = elements[3];
+
+        // doktorand vector Erstellung
+        std::vector<std::string> elements;
+        std::stringstream doktorandStream(elements[4]);
+        while (getline(doktorandStream, item, ' ')) {
+            elements.push_back(item);
+        }
+        std::string doktorandVec = elements[4];
+        std::string betreuer_id = elements[5];
+
+        Person person(id, name, uni, jahr, doktorand_id, betreuer_id);
+        personList.add(person);
+    }
+
+    cout << personList.size() << endl;
+    //personList.print();
+    personList.searchName("Mario  Hlawitschka").print();
+    return 0;
 
 }

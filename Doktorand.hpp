@@ -1,63 +1,67 @@
 #include <iostream>
 #include <vector>
 
-/*class Person {
+class Person {
 
 public:
-    
-//int id;
-std::string id;
-std::string name;
-std::string uni;
-//int jahr;
-//int doktorand_id;
-//int betreuer_id;
-    
-std::string jahr;
-std::string doktorand_id;
-std::string betreuer_id;
-    
+
+    std::string id;
+    std::string name;
+    std::string uni;
+    std::string jahr;
+    std::string doktorand_id;
+    std::string betreuer_id;
 
 
+    Person(std::string id,
+            std::string name,
+            std::string uni,
+            std::string jahr,
+            std::string doktorand_id,
+            std::string betreuer_id)
+            : id(id), name(name), uni(uni), jahr(jahr), doktorand_id(doktorand_id), betreuer_id(betreuer_id) {};
 
-Person(int id, std::string name, std::string uni, int jahr, int betreuer_id, int doktorand_id)
-    :id(id), name(name), uni(uni), jahr(jahr), doktorand_id(doktorand_id), betreuer_id(betreuer_id) {};
-
-    Person(std::string id, std::string name, std::string uni, std::string jahr std::string betreuer_id, std::string doktorand_id)
-    :id(id), name(name), uni(uni), jahr(jahr), doktorand_id(doktorand_id), betreuer_id(betreuer_id) {};
-
-
-
-};*/
-
-class Person2 {
-
-public:
-    
-
-std::string id;
-std::string name;
-std::string uni;   
-std::string jahr;
-
-    
-
-
-Person2(std::string id, std::string name, std::string uni, std::string jahr)
-    :id(id), name(name), uni(uni), jahr(jahr) {};
-
-    
-
-
-
-
-
+    void print() {
+        cout
+        << "id: " << id
+        << " name: " << name
+        << " uni: " << uni
+        << " jahr: " << jahr
+        << " doktorand_id: " << doktorand_id
+        << " betreuer_id: " << betreuer_id
+        << endl;
+    }
 };
 
 
 
 
+class PersonList {
+public:
+    vector<Person> persons;
 
+    Person searchName(string name) {
+        for (Person person: persons) {
+            if (person.name == name) {
+                return person;
+            }
+        }
+    }
+    int add(Person p){
+        persons.push_back(p);
+        return 1;
+    }
+
+    int size(){
+        return persons.size();
+    }
+
+    void print(){
+        for (Person person: persons) {
+            person.print();
+        }
+    }
+};
 
 
 
