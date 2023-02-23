@@ -2,7 +2,7 @@
 
 ### Compile
 ```bash
-clang++ -w main.cpp -o main
+g++ main.cpp -o main -std=c++14 -Wall
 ```
 ### Execute
 ```bash
